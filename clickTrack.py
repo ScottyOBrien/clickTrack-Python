@@ -22,7 +22,7 @@ print("The information you enter is used for the filename, don't use spaces or s
       "for filenames.")
 game = input("what game are you playing?: ")
 character = input("what character?: ")
-print("Logging.. Minimize Window this window until you are ready to stop the script.")
+print("Logging.. Minimize this window until you are ready to stop the script.")
 print("------------------------------------------------------------------------------")
 print("shift+a+x to stop the script and save your clicks to the log.")
 time.sleep(2)
@@ -51,6 +51,7 @@ def on_press(key):
             logging.info('Right Clicks: ' + str(rightClicks))
             scriptRunTime = datetime_time.now() - scriptStartTime
             logging.info("Script Run time: " + str(scriptRunTime))
+            print("you may now close this window.")
             # print(datetime_time.now() - scriptStartTime)
             sys.exit()
 
