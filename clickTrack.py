@@ -1,4 +1,4 @@
-from time import strftime
+import time
 from pynput import keyboard
 from pynput.mouse import Listener as MouseListener
 from pynput.keyboard import Listener as KeyboardListener
@@ -22,6 +22,11 @@ print("The information you enter is used for the filename, don't use spaces or s
       "for filenames.")
 game = input("what game are you playing?: ")
 character = input("what character?: ")
+print("Logging.. Minimize Window this window until you are ready to stop the script.")
+print("------------------------------------------------------------------------------")
+print("shift+a+x to stop the script and save your clicks to the log.")
+time.sleep(2)
+print("Happy Clicking!")
 
 
 # setup logfile
