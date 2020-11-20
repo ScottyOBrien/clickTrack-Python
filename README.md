@@ -23,6 +23,7 @@ pause
 
 ## How to run this script (on windows)
   1. Make sure you have Python installed, and added to your PATH
-  2. Create your bat file using the example above, I recommend creating a new folder somewhere on your PC for this
-  3. double click the bat file, fill out the prompts, follow onscreen instructions :)
-  4. **remember**: You must do shift+a+x to save your clicks to the log file, if you close before this your **clicks will be lost!**
+  2. Open cmd type ```pip install pynput``` and press enter
+  3. Create your bat file using the example above, I recommend creating a new folder somewhere on your PC for this
+  4. double click the bat file, fill out the prompts, follow onscreen instructions :)
+  5. **remember**: You must do shift+a+x to save your clicks to the log file, if you close before this your **clicks will be lost!**
