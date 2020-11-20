@@ -1,21 +1,31 @@
+from time import strftime
 from pynput import keyboard
 from pynput.mouse import Listener as MouseListener
 from pynput.keyboard import Listener as KeyboardListener
 import logging
 import datetime
+from datetime import datetime as datetime_time
 import sys
 
 # setting up datetime object and converting to string for file name
 currentDate = datetime.date.today()
 stringDate = currentDate.strftime("%m-%d-%Y")
+scriptStartTime = datetime_time.now()
 
 # variables for tracking clicks
 leftClicks = 0
 rightClicks = 0
 totalClicks = 0
 
+# input from user
+print("The information you enter is used for the filename, don't use spaces or special characters that arent accepted "
+      "for filenames.")
+game = input("what game are you playing?: ")
+character = input("what character?: ")
+
+
 # setup logfile
-logging.basicConfig(filename=stringDate + "-clicks_log.txt", level=logging.DEBUG, format='%(asctime)s: %(message)s')
+logging.basicConfig(filename=stringDate + "-" + game + "-" + character + "-clicks_log.txt", level=logging.DEBUG, format='%(asctime)s: %(message)s')
 
 # The key combination to check
 COMBINATION = {keyboard.Key.shift, keyboard.KeyCode.from_char('A'), keyboard.KeyCode.from_char('X')}
@@ -26,19 +36,18 @@ current = set()
 
 # methods for KEYBOARD listener
 def on_press(key):
+    global scriptStartTime
     if key in COMBINATION:
         current.add(key)
         if all(k in current for k in COMBINATION):
-            print('All modifiers active!')
+            print('Saving file and ending script...')
             logging.info('Total Clicks: ' + str(totalClicks))
             logging.info('Left Clicks: ' + str(leftClicks))
             logging.info('Right Clicks: ' + str(rightClicks))
+            scriptRunTime = datetime_time.now() - scriptStartTime
+            logging.info("Script Run time: " + str(scriptRunTime))
+            # print(datetime_time.now() - scriptStartTime)
             sys.exit()
-
-    if key == keyboard.Key.esc:
-        print("stopping")
-        keyboard_listener.stop()
-        sys.exit()
 
 
 def on_release(key):
