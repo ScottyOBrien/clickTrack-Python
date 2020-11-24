@@ -72,6 +72,9 @@ def copy_json():
 # Resets counters, creates log file
 def begin_logging():
     btn_run['state'] = ['disabled']
+    json_box['state'] = ['normal']
+    json_box.delete(1.0, 'end')
+    json_box['state'] = ['disabled']
     click.set_right(0)
     click.set_left(0)
     click.set_total(0)
@@ -139,7 +142,7 @@ btn_finish.pack(side=tk.LEFT, padx=10, ipadx=10)
 # placement should be below the clear/run buttons.
 frm_json = tk.Frame()
 frm_json.pack(fill=tk.X, ipadx=5, ipady=5)
-json_box = tk.Text(master=frm_json, width=70, height=5)
+json_box = tk.Text(master=frm_json, width=50, height=5)
 json_box.pack()
 json_box['state'] = ['disabled']
 
