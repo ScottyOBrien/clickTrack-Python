@@ -1,5 +1,3 @@
-from threading import Lock
-
 import pynput
 from pynput import mouse
 import logging
@@ -7,6 +5,7 @@ import datetime
 from datetime import datetime as datetime_time
 import tkinter as tk
 import clicks
+import json
 
 # initialize our clicks object
 click = clicks.Clicks()
@@ -29,22 +28,50 @@ listener.start()
 
 
 def end_logging():
+    # variables for cleanliness
+    total = str(click.public_totalClicks)
+    left = str(click.public_leftClicks)
+    right = str(click.public_rightClicks)
+
+    # console statement for debugging
     print('Saving file and ending script...')
-    logging.info('Total Clicks: ' + str(click.public_totalClicks))
-    logging.info('Left Clicks: ' + str(click.public_leftClicks))
-    logging.info('Right Clicks: ' + str(click.public_rightClicks))
+
+    # add info to logfile
+    logging.info('Total Clicks: ' + total)
+    logging.info('Left Clicks: ' + left)
+    logging.info('Right Clicks: ' + right)
     scriptRunTime = datetime_time.now() - scriptStartTime
     logging.info("Script Run time: " + str(scriptRunTime))
-    click.set_right(0)
-    click.set_left(0)
-    click.set_total(0)
+
+    # build the json, convert it with json.loads, add it to the text box and disable so its not editable
+    data = build_json(total, left, right, scriptRunTime)
+    dataToJSON = json.loads(data)
+    logging.info(dataToJSON)
+    json_box['state'] = ['normal']
+    json_box.insert('end', dataToJSON)
+    json_box['state'] = ['disabled']
+
+    # re-enable run button
+    btn_run['state'] = ['normal']
 
 
-def copy_jason():
+# Builds JSON from data gathered during listening
+def build_json(tc, lc, rc, runtime):
+    jsonData = "{\"data\": {\"game\":\"" + gameEntry.get() + "\", \"character\":\"" + \
+               characterEntry.get() + "\", \"clicks\": {" "\"totalClicks\":" + tc + ", \"leftClicks\":" + \
+               lc + ", \"rightClicks\":" + rc + "}}} "
+    return jsonData
+
+
+# copies JSON data to clipobard
+def copy_json():
     window.clipboard_clear()
+    window.clipboard_append(json_box.get("1.0", "end"))
 
 
+# Resets counters, creates log file
 def begin_logging():
+    btn_run['state'] = ['disabled']
     click.set_right(0)
     click.set_left(0)
     click.set_total(0)
@@ -60,11 +87,13 @@ def begin_logging():
 
 
 # clear entry fields
+# useful for when the user is in their next game and wants to change game title/char without backspacing everything
 def clear_entries():
     gameEntry.delete(0, 'end')
     characterEntry.delete(0, 'end')
 
 
+# render window with tkinter
 window = tk.Tk()
 window.title("ClickTrack")
 
@@ -108,7 +137,19 @@ btn_finish.pack(side=tk.LEFT, padx=10, ipadx=10)
 
 # Create the disabled text widget that will hold the JSON for the user to copy
 # placement should be below the clear/run buttons.
+frm_json = tk.Frame()
+frm_json.pack(fill=tk.X, ipadx=5, ipady=5)
+json_box = tk.Text(master=frm_json, width=70, height=5)
+json_box.pack()
+json_box['state'] = ['disabled']
 
+# frame for copy to clipboard button
+frm_copy = tk.Frame()
+frm_copy.pack(fill=tk.X, ipadx=5, ipady=5)
+
+# copy to clipboard button
+btn_copy = tk.Button(master=frm_copy, text="Copy data to clipboard", command=copy_json)
+btn_copy.pack(side=tk.LEFT, padx=10, ipadx=10)
 
 # Start the application
 window.mainloop()
