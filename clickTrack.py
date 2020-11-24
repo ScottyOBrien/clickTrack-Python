@@ -28,9 +28,9 @@ print("shift+a+x to stop the script and save your clicks to the log.")
 time.sleep(2)
 print("Happy Clicking!")
 
-
 # setup logfile
-logging.basicConfig(filename=stringDate + "-" + game + "-" + character + "-clicks_log.txt", level=logging.DEBUG, format='%(asctime)s: %(message)s')
+logging.basicConfig(filename=stringDate + "-" + game + "-" + character + "-clicks_log.txt", level=logging.DEBUG,
+                    format='%(asctime)s: %(message)s')
 
 # The key combination to check
 COMBINATION = {keyboard.Key.shift, keyboard.KeyCode.from_char('A'), keyboard.KeyCode.from_char('X')}
