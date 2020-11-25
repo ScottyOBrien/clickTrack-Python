@@ -57,9 +57,10 @@ def end_logging():
 
 # Builds JSON from data gathered during listening
 def build_json(tc, lc, rc, runtime):
-    jsonData = "{\"data\": {\"game\":\"" + gameEntry.get() + "\", \"character\":\"" + \
-               characterEntry.get() + "\", \"clicks\": {" "\"totalClicks\":" + tc + ", \"leftClicks\":" + \
+    jsonData = "{\"data\": {\"game\":\"" + gameEntry.get() + "\", \"character\":\"" + characterEntry.get() + \
+               "\", \"runtime\":\"" + str(runtime) + "\", \"clicks\": {" "\"totalClicks\":" + tc + ", \"leftClicks\":" + \
                lc + ", \"rightClicks\":" + rc + "}}} "
+
     return jsonData
 
 
