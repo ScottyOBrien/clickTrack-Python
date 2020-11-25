@@ -45,10 +45,9 @@ def end_logging():
 
     # build the json, convert it with json.loads, add it to the text box and disable so its not editable
     data = build_json(total, left, right, scriptRunTime)
-    dataToJSON = json.loads(data)
-    logging.info(dataToJSON)
+    logging.info(data)
     json_box['state'] = ['normal']
-    json_box.insert('end', dataToJSON)
+    json_box.insert('end', data)
     json_box['state'] = ['disabled']
 
     # re-enable run button
@@ -60,8 +59,8 @@ def build_json(tc, lc, rc, runtime):
     jsonData = "{\"data\": {\"game\":\"" + gameEntry.get() + "\", \"character\":\"" + characterEntry.get() + \
                "\", \"runtime\":\"" + str(runtime) + "\", \"clicks\": {" "\"totalClicks\":" + tc + ", \"leftClicks\":" + \
                lc + ", \"rightClicks\":" + rc + "}}} "
-
-    return jsonData
+    convert = json.loads(jsonData)
+    return convert
 
 
 # copies JSON data to clipobard
