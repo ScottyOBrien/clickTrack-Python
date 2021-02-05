@@ -28,4 +28,8 @@ pause
   4. double click the bat file, fill out the prompts, follow onscreen instructions :)
   5. **remember**: You must do shift+a+x to save your clicks to the log file, if you close before this your **clicks will be lost!**
 
-### TODO: Add info on GUI Version once it's done :)
+### GUI version
+  let me know if there are any bugs:  sobrien.jp@gmail.com
+  
+  The GUI version works very closely to the console script version.
+  
